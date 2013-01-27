@@ -20,7 +20,7 @@ module.exports = class Board
 
 		@draw()
 
-	set: (column, label, value, high, low) ->
+	set: (column, label, value, high, low, increment) ->
 		unless @data?
 			@data = []
 			@data.push [] for num in [1..config.columns]
@@ -30,7 +30,11 @@ module.exports = class Board
 		unless item?
 			@data[column].push { label: label, value: value, high: high, low: low }
 		else
-			item.value = value
+			unless increment?
+				item.value = value
+			else
+				unless value?
+					item.value = parseInt(item.value, 10) + parseInt(increment, 10)
 
 	draw: ->
 		windowSize = process.stdout.getWindowSize()
