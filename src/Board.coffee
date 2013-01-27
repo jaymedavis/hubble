@@ -31,7 +31,7 @@ module.exports = class Board
 			@data[column].push { label: label, value: value, high: high, low: low }
 		else
 			unless increment?
-				item.value = '222'
+				item.value = value
 			else
 				item.value = parseInt(item.value, 10) + parseInt(value, 10)
 
