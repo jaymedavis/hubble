@@ -33,7 +33,8 @@ module.exports = class Board
 			unless increment?
 				item.value = value
 			else
-				item.value = parseInt(item.value, 10) + parseInt(value, 10)
+				unless value?
+					item.value = parseInt(item.value, 10) + parseInt(increment, 10)
 
 	draw: ->
 		windowSize = process.stdout.getWindowSize()
