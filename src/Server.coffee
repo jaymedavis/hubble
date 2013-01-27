@@ -10,13 +10,14 @@ module.exports = class Server
 		app.use express.bodyParser()
 
 		app.post '/', (req, resp) =>
-			column = req.param 'column', null
-			label  = req.param 'label', null
-			value  = req.param 'value', null
-			high   = req.param 'high', null
-			low    = req.param 'low', null
+			column 	  = req.param 'column', null
+			label  	  = req.param 'label', null
+			value  	  = req.param 'value', null
+			high   	  = req.param 'high', null
+			low    	  = req.param 'low', null
+			increment = req.param 'increment', null
 
-			board.set column, label, value, high, low
+			board.set column, label, value, high, low, increment
 			board.draw()
 
 			resp.send 'OK'
