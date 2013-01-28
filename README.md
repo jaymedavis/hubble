@@ -79,9 +79,9 @@ After adding some data, setting some thresholds, the dashboard will now look lik
 A polling example - a github repository dashboard!
 --------------------------------------------------
 
-Let's setup a few API calls that we'll use for polling. We will track some information about our repository, and have it update every minute. We will add some empty data here that does nothing, just to provide a blank line to separate content so it looks better. Lets also change up the colors in the config just for fun. :)
+Let's setup a few API calls that we'll use for polling. We will track some information about our repository, and have it update every 10 seconds. Lets also change up the colors in the config just for fun. :)
 
-Note: if there are no commits for the project you are testing, there is nothing to count so it shows "Bummer :(". Also, you don't have to supply the '[github:username]:[github:password]' in the api requests, but it will allow you to poll more often (5000 requests per hour vs 60 requests per hour)
+Note: if there are no commits for the project you are working with, there is nothing to count so it shows "Bummer :(". Also, you don't have to supply the '[github:username]:[github:password]' in the api requests, but it will allow you to poll more often (5000 requests per hour vs 60 requests per hour)
 
 	curl http://localhost:9999 \
 	-d column=0 \
