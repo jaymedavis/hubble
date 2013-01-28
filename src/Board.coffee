@@ -1,5 +1,6 @@
-colors = require 'colors'
-pad    = require 'pad'
+colors      = require 'colors'
+pad         = require 'pad'
+PollManager = require './PollManager'
 
 module.exports = class Board
 
@@ -20,17 +21,27 @@ module.exports = class Board
 
 		@draw()
 
-	set: (column, label, value, high, low) ->
+	set: (parameters) ->
 		unless @data?
 			@data = []
 			@data.push [] for num in [1..config.columns]
-
-		item = _.find @data[column], (item) => item.label is label
 		
-		unless item?
-			@data[column].push { label: label, value: value, high: high, low: low }
+		if parameters.value?
+			@_createOrUpdateDataPoint parameters
 		else
-			item.value = value
+			poller = new PollManager
+				parameters: parameters
+				update:     (parameters) => @_createOrUpdateDataPoint parameters
+
+	_createOrUpdateDataPoint: (parameters) ->
+		item = _.find @data[parameters.column], (item) => item.label is parameters.label
+
+		if item?
+			item.value = parameters.value
+		else
+		 	@data[parameters.column].push { label: parameters.label, value: parameters.value, high: parameters.high, low: parameters.low }
+
+		@draw()
 
 	draw: ->
 		windowSize = process.stdout.getWindowSize()

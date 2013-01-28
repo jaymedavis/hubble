@@ -1,6 +1,6 @@
 module.exports =
 	title:  'Hubble Space Dashboard'
-	border: '*'
+	border: '•'
 
 	server:
 		port: 9999
@@ -8,7 +8,7 @@ module.exports =
 	# for more information about available options, see https://github.com/Marak/colors.js
 	colors:
 		title:  'green'
-		border: 'grey'   
+		border: 'grey'
 		high:   'red'
 		low:    'red'
 
