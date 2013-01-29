@@ -12,6 +12,7 @@
 		"colors":           "latest",
 		"pad":              "latest",
 		"express":          "latest",
-		"underscore":       "latest"
+		"underscore":       "latest",
+		"request":          "latest"
 	}
 }
