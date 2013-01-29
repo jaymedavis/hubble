@@ -2,7 +2,7 @@
 	"name": "hubble",
 	"version": "0.1.0",
 	"description": "A generic data dashboard that displays in the terminal",
-	"bin": "./hubble.coffee",
+	"bin": "./hubble",
 	"repositories": {
     	"type": "git",
     	"url": "http://github.com/jaymedavis/hubble"
