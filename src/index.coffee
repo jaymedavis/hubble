@@ -1,7 +1,7 @@
 Server = require './Server'
 
 ## globals
-global.config = require '../config'
+global.config = require "#{process.cwd()}/config"
 global._      = require 'underscore'
 
 server = new Server
