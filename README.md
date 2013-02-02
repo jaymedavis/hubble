@@ -38,27 +38,33 @@ First Launch
 
 Upon your first launch of Hubble, you will see a screen like below
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/empty-dashboard.png" />
-Hubble is built behind the idea that you http post information to the server to configure and populate it.
 
-### All of these fields are postable
+Populating your dashboard
+-------------------------
 
-	**column** - 0, 1, etc... defines which column the data goes in. (max columns are defined in config.coffee)
-	**label**  - the name of the data point to be displayed in the console
-	**high**   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])
-	**low**    - only works with numbers. this is the below-the-threshold amount (the number will display as configured in config.coffee [also red])
+Hubble is built behind the idea that you http post information to the server to configure and populate it. This is a list of all commands supported by hubble.
+
+### All of these fields are valid at all times
+
+	column - 0, 1, etc... defines which column the data goes in. (max columns are defined in config.coffee)
+	label  - the name of the data point to be displayed in the console
+	high   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])
+	low    - only works with numbers. this is the below-the-threshold amount (the number will display as configured in config.coffee [also red])
 
 ### If you want to set a specific value that you know, set this field (not compatible with polling)
 
-	**value**  - the value of the data point (a specified value)
+	value  - the value of the data point (a specified value)
 
 ### If you want to poll a value at a specified interval, use these fields (not compatible with value)
 				
-	**poll_url**      - the url of the web request
-	**poll_seconds**  - how often to poll for data changes
-	**poll_failed**   - the message to display if the request fails
-	**poll_method**   - the method to apply to the result for displaying (sorry, only "count_array" until I get around to building more)
-
-Now it's time to give it some data! Since we configured it to have two columns, lets put some data in.
+	poll_url      - the url of the web request
+	poll_seconds  - how often to poll for data changes
+	poll_failed   - the message to display if the request fails
+	poll_method   - the method to apply to the result for displaying (accepts one of the below values)
+		count_array             - if the endpoint is an array, counts the list
+		json_value:{expression} - this will select a single json value from the response. some samples
+	                              of this are in the Github Dashboard below. visit 
+	                              https://github.com/dfilatov/jspath for a full reference.
 
 A Simple Board with pre-set values
 ----------------------------------
@@ -135,11 +141,20 @@ Note: if there are no commits for the project you are working with, there is not
 
 	curl http://localhost:9999 \
 	-d column=1 \
-	-d label="Total Comments" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/comments" \
+	-d label="Last Commit By" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/commits?page=1&per_page=1" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="count_array"
+	-d poll_method="json_value:^.[0].commit.committer.name"
+
+	curl http://localhost:9999 \
+	-d column=1 \
+	-d label="Last Commit" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/commits?page=1&per_page=1" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].commit.committer.date"
+
 
 Your dashboard should now look like below and auto update every 10 seconds. :)
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-dashboard.png" />

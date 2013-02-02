@@ -7,17 +7,6 @@ module.exports = class Board
 	constructor: ->
 		if config.border.length > 1
 			throw new Error 'The border configuration option only supports 1 character :('
-		
-		@title       = config.title
-		@titleColor  = config.colors.title
-		@border      = config.border
-		@borderColor = config.colors.border
-
-		colors.setTheme
-			titleColor:  @titleColor
-			borderColor: @borderColor
-			highColor:   config.colors.high
-			lowColor:    config.colors.low
 
 		@draw()
 
@@ -59,17 +48,17 @@ module.exports = class Board
 		process.stdin.resume()
 
 	_drawBorder: ->
-		console.log @_repeatText @width, @border.borderColor
+		console.log @_repeatText @width, config.border[config.colors.border]
 
 	_drawTitle: ->
 		@_drawBlankLine()
-		@_drawTextInCenter @title, @titleColor
+		@_drawTextInCenter config.title
 		@_drawBlankLine()
 
 	_drawBlankLine: ->
-		console.log @border.borderColor + @_repeatText(@width - 2, ' ') + @border.borderColor
+		console.log config.border[config.colors.border] + @_repeatText(@width - 2, ' ') + config.border[config.colors.border]
 
-	_drawTextInCenter: (content, color) ->
+	_drawTextInCenter: (content) ->
 		halfSpace = (@width - 2 - content.length) / 2
 
 		if halfSpace.toString().indexOf('.') > 0
@@ -79,7 +68,7 @@ module.exports = class Board
 			beginningSpace = halfSpace
 			endSpace       = halfSpace
 
-		console.log @border.borderColor + @_repeatText(beginningSpace, ' ') + content[color] + @_repeatText(endSpace, ' ') + @border.borderColor
+		console.log config.border[config.colors.border] + @_repeatText(beginningSpace, ' ') + content[config.colors.title] + @_repeatText(endSpace, ' ') + config.border[config.colors.border]
 
 	_drawLine: (line) ->
 		unless @data? then return @_drawBlankLine()
@@ -90,11 +79,15 @@ module.exports = class Board
 		for column, index in @data
 			if column[line]
 				label    = column[line].label + ":"
-				value    = " " + @_getValue(column[line])
+				value    = " " + column[line].value
 
 				text += pad space, label, ' '
 
-				if value.length > column[line].value.length + 1
+				if parseFloat(value)
+					if value > parseFloat(column[line].high) then value = value[config.colors.high]
+					if value < parseFloat(column[line].low)  then value = value[config.colors.low]
+
+				if value.length > column[line].value.toString().length + 1
 					text += pad value, space + 10, ' '
 				else
 					text += pad value, space, ' '
@@ -102,18 +95,10 @@ module.exports = class Board
 				text += pad space, '', ' '
 				text += pad '', space, ' '
 
-		text = @border.borderColor + text.substring(1, text.length)     # add the beginning border
-		text = text.substring(0, text.length - 1) + @border.borderColor # add the end border
+		text = config.border[config.colors.border] + text.substring(1, text.length)     # add the beginning border
+		text = text.substring(0, text.length - 1) + config.border[config.colors.border] # add the end border
 
 		console.log text
-
-	_getValue: (item) ->
-		if isNaN(item.value) then return item.value
-
-		if item.value > parseFloat(item.high) then return item.value.highColor
-		if item.value < parseFloat(item.low)  then return item.value.lowColor
-
-		return item.value
 
 	_repeatText: (num, char) ->
 		new Array(num + 1).join(char) # + 1 accounts for the 0 based array

@@ -1,6 +1,6 @@
 {
 	"name": "hubble",
-	"version": "0.1.1",
+	"version": "0.1.2",
 	"description": "A generic data dashboard that displays in the terminal",
 	"bin": "./hubble",
 	"repositories": {
@@ -13,6 +13,8 @@
 		"pad":              "latest",
 		"express":          "latest",
 		"underscore":       "latest",
-		"request":          "latest"
+		"request":          "latest",
+		"jspath":           "latest",
+		"moment":           "latest"
 	}
 }

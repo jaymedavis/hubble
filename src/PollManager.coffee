@@ -1,4 +1,6 @@
 request = require 'request'
+jspath  = require 'jspath'
+moment  = require 'moment'
 
 module.exports = class PollManager
 
@@ -11,11 +13,25 @@ module.exports = class PollManager
 				if !err && response.statusCode is 200
 					json = JSON.parse body
 					
-					if @config.parameters.poll_method = 'count_array'
-						@config.parameters.value = json.length
+					@_setValueFromPollMethod json, @config.parameters.poll_method
 				else
 					@config.parameters.value = @config.parameters.poll_failed
 
 				@config.update @config.parameters
 
 		, @config.parameters.poll_seconds * 1000
+
+	_setValueFromPollMethod: (json, method) ->
+		if method is 'count_array'
+			@config.parameters.value = json.length
+
+		json_value_selector = 'json_value:'
+		if method.substring(0, json_value_selector.length) is json_value_selector
+			entry = jspath.apply method.substring(json_value_selector.length), json
+
+			date = Date.parse(entry[0])
+
+			if date
+				@config.parameters.value = moment(date).fromNow()
+			else
+				@config.parameters.value = entry[0]
