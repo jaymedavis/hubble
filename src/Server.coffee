@@ -13,9 +13,9 @@ module.exports = class Server
 			parameters =
 				column:       req.body.column
 				label:        req.body.label
-				value:        req.body.value
 				high:         req.body.high
 				low:          req.body.low
+				value:        req.body.value
 				poll_url:     req.body.poll_url
 				poll_seconds: req.body.poll_seconds
 				poll_failed:  req.body.poll_failed

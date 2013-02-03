@@ -1,5 +1,5 @@
 module.exports =
-	title:  'Github Repository Dashboard'
+	title:  'Hubble Space Dashboard'
 	border: '•'
 
 	server:
@@ -7,8 +7,8 @@ module.exports =
 
 	# for more information about available options, see https://github.com/Marak/colors.js
 	colors:
-		title:  'inverse'
-		border: 'white'
+		title:  'green'
+		border: 'grey'
 		high:   'red'
 		low:    'red'
 

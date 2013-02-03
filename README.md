@@ -44,12 +44,12 @@ Populating your dashboard
 
 Hubble is built behind the idea that you http post information to the server to configure and populate it. This is a list of all commands supported by hubble.
 
-### All of these fields are valid at all times
+### Creating an entry
 
 	column - 0, 1, etc... defines which column the data goes in. (max columns are defined in config.coffee)
 	label  - the name of the data point to be displayed in the console
-	high   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])
-	low    - only works with numbers. this is the below-the-threshold amount (the number will display as configured in config.coffee [also red])
+
+Specifying the column and the label with nothing else will create center-aligned text in the column. For a blank line in the console, simply don't include the label.
 
 ### If you want to set a specific value that you know, set this field (not compatible with polling)
 
@@ -65,6 +65,11 @@ Hubble is built behind the idea that you http post information to the server to 
 		json_value:{expression} - this will select a single json value from the response. some samples
 	                              of this are in the Github Dashboard below. visit 
 	                              https://github.com/dfilatov/jspath for a full reference.
+
+
+### If you want to set a threshold, you can pass the high and low values. If the value is outside of the threshold, it will turn to the color that was defined in config.coffee.
+	high   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])
+	low    - only works with numbers. this is the below-the-threshold amount (the number will display as configured in config.coffee [also red])
 
 A Simple Board with pre-set values
 ----------------------------------
@@ -132,6 +137,13 @@ Note: if there are no commits for the project you are working with, there is not
 
 	curl http://localhost:9999 \
 	-d column=1 \
+	-d label="Issue Tracking"
+
+	curl http://localhost:9999 \
+	-d column=1
+
+	curl http://localhost:9999 \
+	-d column=1 \
 	-d label="Total Open Issues" \
 	-d high="1" \
 	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/issues?state=open" \
@@ -146,6 +158,16 @@ Note: if there are no commits for the project you are working with, there is not
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="count_array"
+
+	curl http://localhost:9999 \
+	-d column=1 \
+
+	curl http://localhost:9999 \
+	-d column=1 \
+	-d label="Commits"
+
+	curl http://localhost:9999 \
+	-d column=1 \
 
 	curl http://localhost:9999 \
 	-d column=1 \
@@ -170,7 +192,6 @@ Note: if there are no commits for the project you are working with, there is not
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].commit.committer.date"
-
 
 Your dashboard should now look like below and auto update every 10 seconds. :)
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-dashboard.png" />

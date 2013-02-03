@@ -15,7 +15,7 @@ module.exports = class Board
 			@data = []
 			@data.push [] for num in [1..config.columns]
 		
-		if parameters.value?
+		if (!parameters.value? and !parameters.poll_url?) or parameters.value?
 			@_createOrUpdateDataPoint parameters
 		else
 			poller = new PollManager
@@ -23,7 +23,9 @@ module.exports = class Board
 				update:     (parameters) => @_createOrUpdateDataPoint parameters
 
 	_createOrUpdateDataPoint: (parameters) ->
-		item = _.find @data[parameters.column], (item) => item.label is parameters.label
+		item = _.find @data[parameters.column], (item) => 
+			unless item.label? then return null
+			return item.label is parameters.label
 
 		if item?
 			item.value = parameters.value
@@ -78,19 +80,26 @@ module.exports = class Board
 
 		for column, index in @data
 			if column[line]
-				label    = column[line].label + ":"
-				value    = " " + column[line].value
-
-				text += pad space, label, ' '
-
-				if parseFloat(value)
-					if value > parseFloat(column[line].high) then value = value[config.colors.high]
-					if value < parseFloat(column[line].low)  then value = value[config.colors.low]
-
-				if value.length > column[line].value.toString().length + 1
-					text += pad value, space + 10, ' '
+				unless column[line].value?
+					unless column[line].label?
+						text += pad space, '', ' '
+						text += pad '', space, ' '
+					else
+						text += @_getLineTextInCenter space * 2, column[line].label
 				else
-					text += pad value, space, ' '
+					label = column[line].label + ":"
+					value = " " + column[line].value
+
+					text += pad space, label, ' '
+
+					if parseFloat(value)
+						if value > parseFloat(column[line].high) then value = value[config.colors.high]
+						if value < parseFloat(column[line].low)  then value = value[config.colors.low]
+
+					if value.length > column[line].value.toString().length + 1
+						text += pad value, space + 10, ' '
+					else
+						text += pad value, space, ' '
 			else
 				text += pad space, '', ' '
 				text += pad '', space, ' '
@@ -100,5 +109,17 @@ module.exports = class Board
 
 		console.log text
 
+	_getLineTextInCenter: (width, content) ->
+		halfSpace = (width - content.length) / 2
+
+		if halfSpace.toString().indexOf('.') > 0
+			beginningSpace = Math.floor(halfSpace)
+			endSpace       = Math.floor(halfSpace) + 1
+		else
+			beginningSpace = halfSpace
+			endSpace       = halfSpace
+
+		return @_repeatText(beginningSpace, ' ') + content + @_repeatText(endSpace, ' ')
+	
 	_repeatText: (num, char) ->
 		new Array(num + 1).join(char) # + 1 accounts for the 0 based array
