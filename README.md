@@ -91,6 +91,22 @@ A polling example - a github repository dashboard!
 
 Let's setup a few API calls that we'll use for polling. We will track some information about our repository, and have it update every 10 seconds. Lets also change up the colors in the config just for fun. :)
 
+	module.exports =
+		title:  'Github Repository Dashboard'
+		border: '•'
+
+		server:
+			port: 9999
+
+		# for more information about available options, see https://github.com/Marak/colors.js
+		colors:
+			title:  'inverse'
+			border: 'white'
+			high:   'red'
+			low:    'red'
+
+		columns: 2 # how many vertical columns of data for your dashboard
+
 Note: if there are no commits for the project you are working with, there is nothing to count so it shows "Bummer :(". Also, you don't have to supply the '[github:username]:[github:password]' in the api requests, but it will allow you to poll more often (5000 requests per hour vs 60 requests per hour)
 
 	curl http://localhost:9999 \
