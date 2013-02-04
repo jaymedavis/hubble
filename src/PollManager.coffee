@@ -31,7 +31,7 @@ module.exports = class PollManager
 
 			date = Date.parse(entry[0])
 
-			if date
+			if date and isNaN(entry[0])
 				@config.parameters.value = moment(date).fromNow()
 			else
 				@config.parameters.value = entry[0]
