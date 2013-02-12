@@ -54,23 +54,11 @@ module.exports = class Board
 
 	_drawTitle: ->
 		@_drawBlankLine()
-		@_drawTextInCenter config.title
+		console.log config.border[config.colors.border] + @_getLineTextInCenter(@width - 2, config.title, config.colors.title) + config.border[config.colors.border]
 		@_drawBlankLine()
 
 	_drawBlankLine: ->
 		console.log config.border[config.colors.border] + @_repeatText(@width - 2, ' ') + config.border[config.colors.border]
-
-	_drawTextInCenter: (content) ->
-		halfSpace = (@width - 2 - content.length) / 2
-
-		if halfSpace.toString().indexOf('.') > 0
-			beginningSpace = Math.floor(halfSpace)
-			endSpace       = Math.floor(halfSpace) + 1
-		else
-			beginningSpace = halfSpace
-			endSpace       = halfSpace
-
-		console.log config.border[config.colors.border] + @_repeatText(beginningSpace, ' ') + content[config.colors.title] + @_repeatText(endSpace, ' ') + config.border[config.colors.border]
 
 	_drawLine: (line) ->
 		unless @data? then return @_drawBlankLine()
@@ -104,12 +92,9 @@ module.exports = class Board
 				text += pad space, '', ' '
 				text += pad '', space, ' '
 
-		text = config.border[config.colors.border] + text.substring(1, text.length)     # add the beginning border
-		text = text.substring(0, text.length - 1) + config.border[config.colors.border] # add the end border
+		console.log config.border[config.colors.border] + text + config.border[config.colors.border]
 
-		console.log text
-
-	_getLineTextInCenter: (width, content) ->
+	_getLineTextInCenter: (width, content, color) ->
 		halfSpace = (width - content.length) / 2
 
 		if halfSpace.toString().indexOf('.') > 0
@@ -119,7 +104,10 @@ module.exports = class Board
 			beginningSpace = halfSpace
 			endSpace       = halfSpace
 
-		return @_repeatText(beginningSpace, ' ') + content + @_repeatText(endSpace, ' ')
+		if color?
+			return @_repeatText(beginningSpace, ' ') + content[color] + @_repeatText(endSpace, ' ')
+		else
+			return @_repeatText(beginningSpace, ' ') + content + @_repeatText(endSpace, ' ')
 	
 	_repeatText: (num, char) ->
 		new Array(num + 1).join(char) # + 1 accounts for the 0 based array
