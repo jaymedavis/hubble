@@ -64,7 +64,8 @@ module.exports = class Board
 		unless @data? then return @_drawBlankLine()
 
 		text  = ''
-		space = Math.floor(@width / (@data.length * 2))
+		cellSpace = @width / (@data.length * 2)
+		space     = Math.floor(cellSpace)
 
 		for column, index in @data
 			if column[line]
@@ -92,7 +93,24 @@ module.exports = class Board
 				text += pad space, '', ' '
 				text += pad '', space, ' '
 
+		text = @_fixLineSpacing(cellSpace, text)
+
 		console.log config.border[config.colors.border] + text + config.border[config.colors.border]
+
+	_fixLineSpacing: (cellSpace, text) ->
+		remainder = cellSpace % 1
+
+		if remainder is 0.75
+			text = ' ' + text
+		
+		if remainder is 0.25
+			text = text.substring(1)
+		
+		if remainder is 0
+			text = text.substring(1)
+			text = text.substring(0, text.length - 1)
+
+		return text
 
 	_getLineTextInCenter: (width, content, color) ->
 		halfSpace = (width - content.length) / 2
