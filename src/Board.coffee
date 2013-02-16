@@ -28,7 +28,10 @@ module.exports = class Board
 			return item.label is parameters.label
 
 		if item?
-			item.value = parameters.value
+			unless parameters.value is 'increment'
+				item.value = parameters.value
+			else
+				item.value = parseInt(item.value) + 1
 		else
 		 	@data[parameters.column].push { label: parameters.label, value: parameters.value, high: parameters.high, low: parameters.low }
 
