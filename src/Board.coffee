@@ -31,7 +31,7 @@ module.exports = class Board
 			unless parameters.value is 'increment'
 				item.value = parameters.value
 			else
-				item.value = parseInt(item.value) + 1
+				item.value = parseFloat(item.value) + 1
 		else
 		 	@data[parameters.column].push { label: parameters.label, value: parameters.value, high: parameters.high, low: parameters.low }
 

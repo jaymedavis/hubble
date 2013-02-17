@@ -55,6 +55,8 @@ Specifying the column and the label with nothing else will create center-aligned
 
 	value  - the value of the data point (a specified value)
 
+If the value has been set and you want to increment it by one, you can set the value as **increment** (sample below)
+
 ### If you want to poll a value at a specified interval, use these fields (not compatible with value)
 				
 	poll_url      - the url of the web request
@@ -65,7 +67,6 @@ Specifying the column and the label with nothing else will create center-aligned
 		json_value:{expression} - this will select a single json value from the response. some samples
 	                              of this are in the Github Dashboard below. visit 
 	                              https://github.com/dfilatov/jspath for a full reference.
-
 
 ### If you want to set a threshold, you can pass the high and low values. If the value is outside of the threshold, it will turn to the color that was defined in config.coffee.
 	high   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])
@@ -90,6 +91,10 @@ Let's post how many front end and back end servers we have running. If we go und
 
 After adding some data, setting some thresholds, the dashboard will now look like below
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/somedata-dashboard.png" />
+
+If you have another cup of coffee, you can just increment a value that has already been set
+
+	curl --data "column=0&label=Coffee%20Drank%20Today&value=increment&high=4" http://localhost:9999/
 
 A polling example - a github repository dashboard!
 --------------------------------------------------
