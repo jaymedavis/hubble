@@ -72,6 +72,11 @@ If the value has been set and you want to increment it by one, you can set the v
 	high   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])
 	low    - only works with numbers. this is the below-the-threshold amount (the number will display as configured in config.coffee [also red])
 
+### If you will be using multiple screens (pressing a key to toggle between them).
+	screen - a single key (example 'a' ... when you press a, this dashboard will show)
+
+At anytime, you can press escape to return to your default screen.
+
 A Simple Board with pre-set values
 ----------------------------------
 
@@ -96,10 +101,10 @@ If you have another cup of coffee, you can just increment a value that has alrea
 
 	curl --data "column=0&label=Coffee%20Drank%20Today&value=increment&high=4" http://localhost:9999/
 
-A polling example - a github repository dashboard!
---------------------------------------------------
+A polling example - a github repository dashboard
+-------------------------------------------------
 
-Let's setup a few API calls that we'll use for polling. We will track some information about our repository, and have it update every 10 seconds. Lets also change up the colors in the config just for fun. :)
+Let's setup a few API calls that we'll use for polling. We will track some information about our Github account, and have it update every 10 seconds. We will track two repositories on two different screens in addition to our overview screen. Lets also change up the colors in the config just for fun. :)
 
 	module.exports =
 		title:  'Github Repository Dashboard'
@@ -117,89 +122,202 @@ Let's setup a few API calls that we'll use for polling. We will track some infor
 
 		columns: 2 # how many vertical columns of data for your dashboard
 
-Note: if there are no commits for the project you are working with, there is nothing to count so it shows "Bummer :(". Also, you don't have to supply the '[github:username]:[github:password]' in the api requests, but it will allow you to poll more often (5000 requests per hour vs 60 requests per hour)
+You don't have to supply the '[github:username]:[github:password]' in the api requests, but it will allow you to poll more often (5000 requests per hour vs 60 requests per hour)
 
 	curl http://localhost:9999 \
+	-d column=0 \
+	-d label="Name" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].name"
+
+	curl http://localhost:9999 \
+	-d column=0 \
+	-d label="User" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].login"
+
+	curl http://localhost:9999 \
+	-d column=0 \
+	-d label="Location" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].location"
+
+	curl http://localhost:9999 \
+	-d column=0 \
+	-d label="Followers" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].followers"
+
+	curl http://localhost:9999 \
+	-d column=0 \
+
+	curl http://localhost:9999 \
+	-d column=0 \
+	-d label="Public Repos" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].public_repos"
+
+	curl http://localhost:9999 \
+	-d column=0 \
+	-d label="Public Repos" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].public_gists"
+
+	curl http://localhost:9999 \
+	-d column=1 \
+	-d label="Repositories"
+
+	curl http://localhost:9999 \
+	-d column=1 \
+
+	curl http://localhost:9999 \
+	-d column=1 \
+	-d label="hubble" \
+	-d value="press 'h'"
+
+	curl http://localhost:9999 \
+	-d column=1 \
+	-d label="stripe.net" \
+	-d value="press 's'"
+
+Your dashboard so far will look like below
+<img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-dashboard.png" />
+
+Let's build another screen to track hubble by pressing the 'h' key. The curl request is the same as before, you just also pass in **screen=h** to specify "show this when h is pressed"
+
+	curl http://localhost:9999 \
+	-d screen="h" \
 	-d column=0 \
 	-d label="Repository Name" \
-	-d value="Hubble"
+	-d value="hubble"
 
 	curl http://localhost:9999 \
+	-d screen="h" \
 	-d column=0 \
-	-d label="Total Collaborators" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/collaborators" \
+	-d label="Language" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="count_array"
+	-d poll_method="json_value:^.[0].language"
 
 	curl http://localhost:9999 \
+	-d screen="h" \
+	-d column=0
+
+	curl http://localhost:9999 \
+	-d screen="h" \
 	-d column=0 \
-	-d label="Total Forks" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/forks" \
+	-d label="Watchers" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="count_array"
+	-d poll_method="json_value:^.[0].watchers_count"
 
 	curl http://localhost:9999 \
+	-d screen="h" \
+	-d column=0 \
+	-d label="Forks" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
+	-d poll_seconds=10 \
+	-d poll_failed="Bummer :(" \
+	-d poll_method="json_value:^.[0].forks_count"
+
+	curl http://localhost:9999 \
+	-d screen="h" \
 	-d column=1 \
 	-d label="Issue Tracking"
 
 	curl http://localhost:9999 \
+	-d screen="h" \
 	-d column=1
 
 	curl http://localhost:9999 \
+	-d screen="h" \
 	-d column=1 \
 	-d label="Total Open Issues" \
 	-d high="1" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/issues?state=open" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="count_array"
+	-d poll_method="json_value:^.[0].open_issues_count"
+
+If you press 'h', you will see something like below
+<img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-screen-h.png" />
+
+Let's build another screen to track stripe.net by pressing the 's' key. The curl request is the same as before, you just also pass in **screen=s** to specify "show this when s is pressed"
 
 	curl http://localhost:9999 \
-	-d column=1 \
-	-d label="Total Closed Issues" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/issues?state=closed" \
+	-d screen="s" \
+	-d column=0 \
+	-d label="Repository Name" \
+	-d value="stripe.net"
+
+	curl http://localhost:9999 \
+	-d screen="s" \
+	-d column=0 \
+	-d label="Language" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="count_array"
+	-d poll_method="json_value:^.[0].language"
 
 	curl http://localhost:9999 \
-	-d column=1 \
+	-d screen="s" \
+	-d column=0
 
 	curl http://localhost:9999 \
-	-d column=1 \
-	-d label="Commits"
-
-	curl http://localhost:9999 \
-	-d column=1 \
-
-	curl http://localhost:9999 \
-	-d column=1 \
-	-d label="Total Commits" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/commits" \
+	-d screen="s" \
+	-d column=0 \
+	-d label="Watchers" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="count_array"
+	-d poll_method="json_value:^.[0].watchers_count"
 
 	curl http://localhost:9999 \
-	-d column=1 \
-	-d label="Last Commit By" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/commits?page=1&per_page=1" \
+	-d screen="s" \
+	-d column=0 \
+	-d label="Forks" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="json_value:^.[0].commit.committer.name"
+	-d poll_method="json_value:^.[0].forks_count"
 
 	curl http://localhost:9999 \
+	-d screen="s" \
 	-d column=1 \
-	-d label="Last Commit" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble/commits?page=1&per_page=1" \
+	-d label="Issue Tracking"
+
+	curl http://localhost:9999 \
+	-d screen="s" \
+	-d column=1
+
+	curl http://localhost:9999 \
+	-d screen="s" \
+	-d column=1 \
+	-d label="Total Open Issues" \
+	-d high="1" \
+	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
-	-d poll_method="json_value:^.[0].commit.committer.date"
+	-d poll_method="json_value:^.[0].open_issues_count"
 
-Your dashboard should now look like below and auto update every 10 seconds. :)
-<img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-dashboard.png" />
+If you press 's', you will see something like below
+<img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-screen-s.png" />
+
+If you want to go back to the main screen at anytime, just press escape. 
 
 Other Stuff
 -----------
