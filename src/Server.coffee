@@ -34,7 +34,7 @@ module.exports = class Server
 
 			if parameters.screen?
 				unless @boards[parameters.screen]?
-					@boards[parameters.screen] = new Board
+					@boards[parameters.screen] = new Board @
 
 				board = @boards[parameters.screen]
 			
@@ -49,7 +49,7 @@ module.exports = class Server
 
 	_setupBoards: ->
 		@boards = []
-		@boards['default'] = new Board
+		@boards['default'] = new Board @
 		@activeBoard = @boards['default']
 		@activeBoard.draw()
 
