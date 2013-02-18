@@ -8,8 +8,6 @@ module.exports = class Board
 		if config.border.length > 1
 			throw new Error 'The border configuration option only supports 1 character :('
 
-		@draw()
-
 	set: (parameters) ->
 		unless @data?
 			@data = []
@@ -35,8 +33,6 @@ module.exports = class Board
 		else
 		 	@data[parameters.column].push { label: parameters.label, value: parameters.value, high: parameters.high, low: parameters.low }
 
-		@draw()
-
 	draw: ->
 		windowSize = process.stdout.getWindowSize()
 		@width     = windowSize[0]
@@ -49,8 +45,6 @@ module.exports = class Board
 			@_drawLine(line)
 
 		@_drawBorder()
-
-		process.stdin.resume()
 
 	_drawBorder: ->
 		console.log @_repeatText @width, config.border[config.colors.border]

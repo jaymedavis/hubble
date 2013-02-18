@@ -15,6 +15,7 @@
 		"underscore":       "latest",
 		"request":          "latest",
 		"jspath":           "latest",
-		"moment":           "latest"
+		"moment":           "latest",
+		"keypress":         "latest"
 	}
 }
