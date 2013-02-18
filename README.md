@@ -15,7 +15,7 @@ Quick Start
 
 	module.exports =
 		title:  'Hubble Space Dashboard'
-		border: '*'
+		border: '•'
 
 		server:
 			port: 9999
@@ -169,7 +169,7 @@ You don't have to supply the '[github:username]:[github:password]' in the api re
 
 	curl http://localhost:9999 \
 	-d column=0 \
-	-d label="Public Repos" \
+	-d label="Public Gists" \
 	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
