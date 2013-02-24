@@ -1,4 +1,3 @@
-[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/a4ad558698309eb2dd7f62ab575641af "githalytics.com")](http://githalytics.com/jaymedavis/hubble)
 Hubble
 ======
 
@@ -324,3 +323,4 @@ Other Stuff
 -----------
 
 I really have enjoyed working on this project and would love to hear how you use it. Shoot me an email or a twitter message (@jaymed), I'd appreciate it!
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/a4ad558698309eb2dd7f62ab575641af "githalytics.com")](http://githalytics.com/jaymedavis/hubble)
