@@ -1,3 +1,4 @@
+[![githalytics.com alpha](https://cruel-carlota.pagodabox.com/a4ad558698309eb2dd7f62ab575641af "githalytics.com")](http://githalytics.com/jaymedavis/hubble)
 Hubble
 ======
 
