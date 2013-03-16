@@ -1,11 +1,10 @@
-express       = require 'express'
-keypress      = require 'keypress'
-Board         = require './Board'
+express      = require 'express'
+BoardManager = require './BoardManager'
 
 module.exports = class Server
 
 	start: ->
-		@_setupBoards()
+		boardManager = new BoardManager
 
 		app = express()
 		app.use express.bodyParser()
@@ -29,46 +28,10 @@ module.exports = class Server
 
 			if parameters.screen? and parameters.screen.length > 1
 				resp.send 'screen only supports 1 character'
+				return
 
-			board = @boards['default']
-
-			if parameters.screen?
-				unless @boards[parameters.screen]?
-					@boards[parameters.screen] = new Board @
-
-				board = @boards[parameters.screen]
-			
-			board.set parameters
-
-			if board is @activeBoard then board.draw()
+			boardManager.sendBoardData parameters
 
 			resp.send 'OK'
 
 		app.listen(config.server.port)
-		@_manageInput()
-
-	_setupBoards: ->
-		@boards = []
-		@boards['default'] = new Board @
-		@activeBoard = @boards['default']
-		@activeBoard.draw()
-
-	_manageInput: ->
-		keypress process.stdin
-
-		process.stdin.on 'keypress', (chunk, key) =>
-			unless key? then return
-			
-			if key.ctrl and key.name is 'c'
-				process.exit()
-
-			if key.name is 'escape'
-				@activeBoard = @boards['default']
-				@activeBoard.draw()
-
-			if @boards[key.name]
-				@activeBoard = @boards[key.name]
-				@activeBoard.draw()
-
-		process.stdin.setRawMode true
-		process.stdin.resume()

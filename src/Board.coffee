@@ -4,7 +4,7 @@ PollManager = require './PollManager'
 
 module.exports = class Board
 
-	constructor: (@server) ->
+	constructor: (@boardManager) ->
 		if config.border.length > 1
 			throw new Error 'The border configuration option only supports 1 character :('
 
@@ -33,7 +33,7 @@ module.exports = class Board
 		else
 		 	@data[parameters.column].push { label: parameters.label, value: parameters.value, high: parameters.high, low: parameters.low }
 
-		 if @server.activeBoard is @ then @draw()
+		 if @boardManager.activeBoard is @ then @draw()
 		 
 	draw: ->
 		windowSize = process.stdout.getWindowSize()
