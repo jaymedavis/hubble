@@ -1,7 +1,7 @@
 Hubble
 ======
 
-Hubble is a dashboard that displays in a terminal with any data you provide via http. It also allows you to setup thresholds if a number goes above/under a certain value. You can have any webhooks, programs, workers, scripts, etc just send an http post request (or setup an api endpoint to poll) and it will get placed on the dashboard. Be creative!!
+Hubble is a dashboard that displays in a terminal with any data you want. It allows you to setup thresholds if a number goes above/under a certain value. You can have any webhooks, programs, workers, scripts, etc just send an http post request (or setup an api endpoint to poll) and it will get placed on the dashboard. You can also just write a coffee file and have it load from disk. Be creative!!
 
 Quick Start
 -----------
@@ -42,7 +42,7 @@ Upon your first launch of Hubble, you will see a screen like below
 Populating your dashboard
 -------------------------
 
-Hubble is built behind the idea that you http post information to the server to configure and populate it. This is a list of all commands supported by hubble.
+Hubble is built behind the idea that you http post information to the server, or load it from disk to configure and populate it. This is a list of the parameters supported by hubble.
 
 ### Creating an entry
 
@@ -318,6 +318,19 @@ If you press 's', you will see something like below
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/github-screen-s.png" />
 
 If you want to go back to the main screen at anytime, just press escape. 
+
+Saving and Loading your dashboard on disk
+-----------------------------------------
+
+If you wish to take a snapshot of your current board and save it to disk, you can do so by posting to /save, and providing a filename.
+
+	curl --data "filename=myboard.coffee" http://localhost:9999/save
+
+If you wish to load your file next time you start hubble, just provide it as a parameter at the command line.
+
+	./hubble myboard.coffee
+
+You could just as easily write your script directly if you choose... without doing any http posts.
 
 Other Stuff
 -----------

@@ -33,7 +33,7 @@ module.exports = class Board
 		else
 			@data[parameters.column].push parameters
 
-		 if @boardManager.activeBoard is @ then @draw()
+		if @boardManager.activeBoard is @ then @draw()
 		 
 	draw: ->
 		windowSize = process.stdout.getWindowSize()
