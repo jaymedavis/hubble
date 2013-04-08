@@ -1,5 +1,7 @@
 express      = require 'express'
+fs           = require 'fs'
 BoardManager = require './BoardManager'
+DiskManager  = require './DiskManager'
 
 module.exports = class Server
 
@@ -8,6 +10,19 @@ module.exports = class Server
 
 		app = express()
 		app.use express.bodyParser()
+
+		if process.argv[2]?
+			diskManager = new DiskManager
+
+			diskManager.load process.argv[2], (err, data) ->
+				if err?
+					console.log err
+					process.exit()
+					return
+
+				boardManager.loadFromData data
+		else
+			boardManager.setupDefaultBoard()
 
 		app.post '/', (req, resp) =>
 			parameters =
@@ -23,15 +38,30 @@ module.exports = class Server
 				screen:       req.body.screen
 
 			if parameters.value? and (parameters.poll_url? or parameters.poll_seconds? or parameters.poll_failed?)
-				resp.send 'you cannot set the value manually and also have it poll. it needs to do one or the other'
+				resp.send 'you cannot set the value manually and also have it poll. it needs to do one or the other', 400
 				return
 
 			if parameters.screen? and parameters.screen.length > 1
-				resp.send 'screen only supports 1 character'
+				resp.send 'screen only supports 1 character', 400
 				return
 
 			boardManager.sendBoardData parameters
 
 			resp.send 'OK'
+
+		app.post '/save', (req, resp) =>
+			parameters =
+				filename: req.body.filename
+
+			unless parameters.filename?
+				resp.send 'cannot save without a filename', 400
+				return
+
+			diskManager = new DiskManager
+			diskManager.save boardManager.boards, parameters.filename, (err) ->
+				if err
+					resp.send err, 400
+				else
+					resp.send 'OK'
 
 		app.listen(config.server.port)

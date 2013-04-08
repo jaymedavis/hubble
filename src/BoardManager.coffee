@@ -3,10 +3,21 @@ Board    = require './Board'
 
 module.exports = class BoardManager
 
-	constructor: ->
+	setupDefaultBoard: ->
 		@_addBoard  'default'
 		@_drawBoard 'default'
+		@_manageInput()
 
+	loadFromData: (data) ->
+		data = JSON.parse data
+
+		for board in _.keys(data)
+			newBoard = @_addBoard board
+
+			for entry in data[board].data
+				newBoard.set entry
+
+		@_drawBoard 'default'
 		@_manageInput()
 
 	sendBoardData: (parameters) ->
@@ -23,11 +34,11 @@ module.exports = class BoardManager
 		if board is @activeBoard then board.draw()
 
 	_addBoard: (key) ->
-		unless @items?
-			@items = []
+		unless @boards?
+			@boards = []
 		
-		item = { name: "board-#{key}", board: new Board @ }
-		@items.push item
+		item = { name: "board_#{key}", board: new Board @ }
+		@boards.push item
 
 		return item.board
 
@@ -36,8 +47,8 @@ module.exports = class BoardManager
 		@activeBoard.draw()
 
 	_findBoardByKey: (key) ->
-		name = "board-#{key}"
-		item = _.find @items, (board) -> board.name is name
+		name = "board_#{key}"
+		item = _.find @boards, (board) -> board.name is name
 
 		if item? then return item.board
 
@@ -54,7 +65,6 @@ module.exports = class BoardManager
 				@_drawBoard 'default'
 
 			if @_findBoardByKey key.name
-				console.log 'found it!'
 				@_drawBoard key.name
 
 		process.stdin.setRawMode true

@@ -21,7 +21,7 @@ module.exports = class Board
 				update:     (parameters) => @_createOrUpdateDataPoint parameters
 
 	_createOrUpdateDataPoint: (parameters) ->
-		item = _.find @data[parameters.column], (item) => 
+		item = _.find @data[parameters.column], (item) =>
 			unless item.label? then return null
 			return item.label is parameters.label
 
@@ -31,7 +31,7 @@ module.exports = class Board
 			else
 				item.value = parseFloat(item.value) + 1
 		else
-		 	@data[parameters.column].push { label: parameters.label, value: parameters.value, high: parameters.high, low: parameters.low }
+			@data[parameters.column].push parameters
 
 		 if @boardManager.activeBoard is @ then @draw()
 		 
@@ -128,3 +128,4 @@ module.exports = class Board
 	
 	_repeatText: (num, char) ->
 		new Array(num + 1).join(char) # + 1 accounts for the 0 based array
+
