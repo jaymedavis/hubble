@@ -9,7 +9,12 @@ module.exports = class PollManager
 		@config.update @config.parameters
 
 		setInterval =>
-			request @config.parameters.poll_url, (err, response, body) =>
+			poll_url = @config.parameters.poll_url
+			try
+				json_url = JSON.parse poll_url
+				poll_url = json_url
+			catch e
+			request poll_url, (err, response, body) =>
 				if !err && response.statusCode is 200
 					json = JSON.parse body
 					
