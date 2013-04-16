@@ -9,12 +9,17 @@ module.exports = class PollManager
 		@config.update @config.parameters
 
 		setInterval =>
-			poll_url = @config.parameters.poll_url
-			try
-				json_url = JSON.parse poll_url
-				poll_url = json_url
-			catch e
-			request poll_url, (err, response, body) =>
+			options = {"uri":@config.parameters.poll_url}
+			if @config.parameters.poll_header?
+				options.headers = {}
+				if typeof @config.parameters.poll_header is "string" && @config.parameters.poll_header.indexOf(":") > 0 #only one header passed
+					options.headers[@config.parameters.poll_header.split(":")[0].trim()] = @config.parameters.poll_header.split(":")[1].trim()
+				else #multiple headers passed
+					for val in @config.parameters.poll_header
+						if val.indexOf(":") > 0
+							options.headers[val.split(":")[0].trim()] = val.split(":")[1].trim() unless val.split(":").length == 0
+
+			request options, (err, response, body) =>
 				if !err && response.statusCode is 200
 					json = JSON.parse body
 					

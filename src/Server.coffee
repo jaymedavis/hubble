@@ -32,6 +32,7 @@ module.exports = class Server
 				low:          req.body.low
 				value:        req.body.value
 				poll_url:     req.body.poll_url
+				poll_header:  req.body.poll_header
 				poll_seconds: req.body.poll_seconds
 				poll_failed:  req.body.poll_failed
 				poll_method:  req.body.poll_method
