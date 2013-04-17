@@ -17,7 +17,7 @@ module.exports = class PollManager
 				else #multiple headers passed
 					for val in @config.parameters.poll_header
 						if val.indexOf(":") > 0
-							options.headers[val.split(":")[0].trim()] = val.split(":")[1].trim() unless val.split(":").length == 0
+							options.headers[val.split(":")[0].trim()] = val.split(":")[1].trim()
 
 			request options, (err, response, body) =>
 				if !err && response.statusCode is 200
