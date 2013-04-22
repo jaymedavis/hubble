@@ -57,6 +57,7 @@ module.exports = class DiskManager
 					coffee += "\n\t\t\t\"low\":          #{entry.low}"             if entry.low?
 					coffee += "\n\t\t\t\"value\":        \"#{entry.value}\""       if entry.value? and !entry.poll_url?
 					coffee += "\n\t\t\t\"poll_url\":     \"#{entry.poll_url}\""    if entry.poll_url?
+					coffee += "\n\t\t\t\"poll_header\":  #{JSON.stringify(entry.poll_header)}" if entry.poll_header?
 					coffee += "\n\t\t\t\"poll_seconds\": #{entry.poll_seconds}"    if entry.poll_seconds?
 					coffee += "\n\t\t\t\"poll_failed\":  \"#{entry.poll_failed}\"" if entry.poll_failed?
 					coffee += "\n\t\t\t\"poll_method\":  \"#{entry.poll_method}\"" if entry.poll_method?
