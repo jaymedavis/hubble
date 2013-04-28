@@ -35,6 +35,7 @@ module.exports = class Server
 				poll_seconds: req.body.poll_seconds
 				poll_failed:  req.body.poll_failed
 				poll_method:  req.body.poll_method
+				poll_header:  req.body.poll_header
 				screen:       req.body.screen
 
 			if parameters.value? and (parameters.poll_url? or parameters.poll_seconds? or parameters.poll_failed?)

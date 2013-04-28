@@ -60,6 +60,14 @@ module.exports = class DiskManager
 					coffee += "\n\t\t\t\"poll_seconds\": #{entry.poll_seconds}"    if entry.poll_seconds?
 					coffee += "\n\t\t\t\"poll_failed\":  \"#{entry.poll_failed}\"" if entry.poll_failed?
 					coffee += "\n\t\t\t\"poll_method\":  \"#{entry.poll_method}\"" if entry.poll_method?
+
+					if entry.poll_header?
+						if typeof(entry.poll_header) is 'string'
+							coffee += "\n\t\t\t\"poll_header\":  \"#{entry.poll_header}\""
+						else
+							for header in entry.poll_header
+						 		coffee += "\n\t\t\t\"poll_header\":  \"#{header}\""
+
 					coffee += "\n\t\t\t\"screen\":       \"#{entry.screen}\""      if entry.screen?
 					coffee += "\n\t\t}"
 

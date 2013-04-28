@@ -67,6 +67,7 @@ If the value has been set and you want to increment it by one, you can set the v
 		json_value:{expression} - this will select a single json value from the response. some samples
 	                              of this are in the Github Dashboard below. visit 
 	                              https://github.com/dfilatov/jspath for a full reference.
+	poll_header   - any headers to add to the request (you can specify more than one poll_header if you need to)
 
 ### If you want to set a threshold, you can pass the high and low values. If the value is outside of the threshold, it will turn to the color that was defined in config.coffee.
 	high   - only works with numbers. this is the over-the-threshold amount (the number will display as configured in config.coffee [red])

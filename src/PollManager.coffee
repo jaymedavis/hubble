@@ -8,8 +8,20 @@ module.exports = class PollManager
 		@config.parameters.value = 'initializing...'
 		@config.update @config.parameters
 
+		options =
+			url:     @config.parameters.poll_url
+			headers: []
+
+		poll_headers = @config.parameters.poll_header
+		if poll_headers?
+			if typeof(poll_headers) is 'string'
+				options.headers[poll_headers.split(":")[0].trim()] = poll_headers.split(":")[1].trim()
+			else
+				for header in poll_headers
+					options.headers[header.split(":")[0].trim()] = header.split(":")[1].trim()
+
 		setInterval =>
-			request @config.parameters.poll_url, (err, response, body) =>
+			request options, (err, response, body) =>
 				if !err && response.statusCode is 200
 					json = JSON.parse body
 					
