@@ -1,6 +1,7 @@
 request = require 'request'
 jspath  = require 'jspath'
 moment  = require 'moment'
+pjson   = require '../package.json'
 
 module.exports = class PollManager
 
@@ -11,6 +12,8 @@ module.exports = class PollManager
 		options =
 			url:     @config.parameters.poll_url
 			headers: []
+
+		options.headers['User-Agent'] = "hubble #{pjson.version}"
 
 		poll_headers = @config.parameters.poll_header
 		if poll_headers?
