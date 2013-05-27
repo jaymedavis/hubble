@@ -40,6 +40,8 @@ module.exports = class Board
 		@width     = windowSize[0]
 		@height    = windowSize[1] - 7 # todo: figure out why this is hardcoded to fit the screen
 
+		@drawBuffer = ''
+
 		@_drawBorder()
 		@_drawTitle()
 
@@ -48,16 +50,21 @@ module.exports = class Board
 
 		@_drawBorder()
 
+		console.log @drawBuffer
+
+	_addToDrawBuffer: (value) ->
+		@drawBuffer += value
+
 	_drawBorder: ->
-		console.log @_repeatText @width, config.border[config.colors.border]
+		@_addToDrawBuffer @_repeatText @width, config.border[config.colors.border]
 
 	_drawTitle: ->
 		@_drawBlankLine()
-		console.log config.border[config.colors.border] + @_getLineTextInCenter(@width - 2, config.title, config.colors.title) + config.border[config.colors.border]
+		@_addToDrawBuffer config.border[config.colors.border] + @_getLineTextInCenter(@width - 2, config.title, config.colors.title) + config.border[config.colors.border]
 		@_drawBlankLine()
 
 	_drawBlankLine: ->
-		console.log config.border[config.colors.border] + @_repeatText(@width - 2, ' ') + config.border[config.colors.border]
+		@_addToDrawBuffer config.border[config.colors.border] + @_repeatText(@width - 2, ' ') + config.border[config.colors.border]
 
 	_drawLine: (line) ->
 		unless @data? then return @_drawBlankLine()
@@ -94,7 +101,7 @@ module.exports = class Board
 
 		text = @_fixLineSpacing(cellSpace, text)
 
-		console.log config.border[config.colors.border] + text + config.border[config.colors.border]
+		@_addToDrawBuffer config.border[config.colors.border] + text + config.border[config.colors.border]
 
 	_fixLineSpacing: (cellSpace, text) ->
 		remainder = cellSpace % 1
