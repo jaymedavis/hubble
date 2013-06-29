@@ -48,7 +48,7 @@ module.exports = class Server
 
 			boardManager.sendBoardData parameters
 
-			resp.send 'OK'
+			resp.send 'OK'.green
 
 		app.post '/save', (req, resp) =>
 			parameters =
@@ -63,6 +63,6 @@ module.exports = class Server
 				if err
 					resp.send err, 400
 				else
-					resp.send 'OK'
+					resp.send 'OK'.green
 
 		app.listen(config.server.port)

@@ -45,6 +45,11 @@ module.exports = class Board
 		@_drawBorder()
 		@_drawTitle()
 
+		if config.banner?
+			@height = @height - 2
+			@_drawBlankLine()
+			@_addToDrawBuffer config.border[config.colors.border] + @_getLineTextInCenter(@width - 2, config.banner.text, config.banner.color) + config.border[config.colors.border]
+
 		for line in [0..@height]
 			@_drawLine(line)
 
@@ -135,4 +140,3 @@ module.exports = class Board
 	
 	_repeatText: (num, char) ->
 		new Array(num + 1).join(char) # + 1 accounts for the 0 based array
-

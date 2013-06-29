@@ -1,7 +1,18 @@
-cs   = require 'coffee-script'
-fs   = require 'fs'
+cs = require 'coffee-script'
+fs = require 'fs'
 
 module.exports = class DiskManager
+
+	saveConfig: (config, filename, callback) ->
+		defaultConfig = __dirname + '/configs/Default.coffee'
+
+		fs.readFile defaultConfig, (err, data) ->
+			if err then return callback(err)
+
+			fs.writeFile "config.coffee", data, (err) ->
+				if err then return callback(err)
+
+				callback()
 
 	save: (boards, filename, callback) ->
 		newBoards = []
@@ -9,7 +20,7 @@ module.exports = class DiskManager
 		for board in boards
 			newBoards.push @_sanitizeBoard board
 
-		fs.writeFile filename, @_convertToCoffeeScript(newBoards), (err) ->
+		fs.writeFile filename, @_convertBoardsToCoffeeScript(newBoards), (err) ->
 			if err then return callback(err)
 
 			callback()
@@ -38,7 +49,7 @@ module.exports = class DiskManager
 
 		return newBoard
 
-	_convertToCoffeeScript: (boards) ->
+	_convertBoardsToCoffeeScript: (boards) ->
 		coffee = ""
 
 		for board in boards

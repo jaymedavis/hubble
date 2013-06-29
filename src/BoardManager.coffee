@@ -1,5 +1,7 @@
-keypress = require 'keypress'
-Board    = require './Board'
+keypress      = require 'keypress'
+Board         = require './Board'
+DiskManager   = require './DiskManager'
+DefaultConfig = require './configs/Default'
 
 module.exports = class BoardManager
 
@@ -58,6 +60,14 @@ module.exports = class BoardManager
 		process.stdin.on 'keypress', (chunk, key) =>
 			unless key? then return
 			
+			# todo: these could potentially clash with users screens
+			if key.name is 'q'
+				process.exit()
+
+			if key.name is 'y'
+				@_saveConfig()
+			#end todo
+
 			if key.ctrl and key.name is 'c'
 				process.exit()
 
@@ -69,3 +79,12 @@ module.exports = class BoardManager
 
 		process.stdin.setRawMode true
 		process.stdin.resume()
+
+	_saveConfig: ->
+		diskManager = new DiskManager
+		diskManager.saveConfig DefaultConfig, "config.coffee", (err) =>
+			if err
+				console.log err, 400
+			else
+				global.config = require "#{process.cwd()}/config"
+				@_drawBoard 'default'

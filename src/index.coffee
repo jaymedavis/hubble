@@ -1,8 +1,16 @@
-Server = require './Server'
+fs            = require 'fs'
+Server        = require './Server'
+WelcomeConfig = require './configs/Welcome'
 
 ## globals
-global.config = require "#{process.cwd()}/config"
 global._      = require 'underscore'
 
-server = new Server
-server.start()
+# load config
+fs.exists "#{process.cwd()}/config.coffee", (exists) ->
+	if exists
+		global.config = require "#{process.cwd()}/config"
+	else
+		global.config = WelcomeConfig
+
+	server = new Server
+	server.start()
