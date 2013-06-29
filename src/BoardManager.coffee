@@ -62,6 +62,7 @@ module.exports = class BoardManager
 			
 			# todo: these could potentially clash with users screens
 			if key.name is 'q'
+				console.log ':('.white
 				process.exit()
 
 			if key.name is 'y'

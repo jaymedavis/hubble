@@ -6,30 +6,11 @@ Hubble is a dashboard that displays in a terminal with any data you want. It all
 Quick Start
 -----------
 
-1) Install coffee-script globally (if you don't already have this) and hubble
+1) Install hubble
 	
-	npm install -g coffee-script
 	npm install -g hubble
 
-2) Create a config.coffee wherever you plan to run hubble from. Here is a simple one to get you started:
-
-	module.exports =
-		title:  'Hubble Space Dashboard'
-		border: '•'
-
-		server:
-			port: 9999
-
-		# for more information about available options, see https://github.com/Marak/colors.js
-		colors:
-			title:  'green'
-			border: 'grey'   
-			high:   'red'
-			low:    'red'
-
-		columns: 2 # how many vertical columns of data for your dashboard
-
-3) Now just start your dashboard by typing
+2) Start your dashboard by typing
 	
 	hubble
 
@@ -38,6 +19,10 @@ First Launch
 
 Upon your first launch of Hubble, you will see a screen like below
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/empty-dashboard.png" />
+
+From this screen, press Y to create config.coffee in the current directory. This file contains the server and dashboard configuration. After this file is created, your board will automatically reload.
+
+<img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/new-dashboard.png" />
 
 Populating your dashboard
 -------------------------

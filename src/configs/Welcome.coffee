@@ -4,7 +4,7 @@ module.exports =
     border: '•'
 
     banner:
-        text:    "Looks like you haven't created a config.coffee, yet. If you want me to create one for you, just press Y. To exit, press Q."
+        text:    "You haven't created a config.coffee file. If you want me to create one for you, press Y. To exit, press Q."
         color:   'grey'
         padding:  20
         
