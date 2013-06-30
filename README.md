@@ -28,6 +28,8 @@ From this screen, press Y to create config.coffee in the current directory. This
 
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/new-dashboard.png" />
 
+You now edit config.coffee to customize your board. :)
+
 Populating your dashboard
 -------------------------
 
