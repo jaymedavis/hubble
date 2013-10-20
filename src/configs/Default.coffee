@@ -6,7 +6,6 @@ module.exports =
     banner:
         text:    "Hubble is now waiting for commands at http://localhost:9999! You can remove this banner in config.coffee."
         color:   'green'
-        padding:  20
 
     server:
         port: 9999

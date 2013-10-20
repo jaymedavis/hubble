@@ -26,10 +26,12 @@ module.exports = class Board
 			return item.label is parameters.label
 
 		if item?
-			unless parameters.value is 'increment'
-				item.value = parameters.value
-			else
+			if parameters.value is 'increment'
 				item.value = parseFloat(item.value) + 1
+			else if parameters.value is 'decrement'
+				item.value = parseFloat(item.value) - 1
+			else
+				item.value = parameters.value
 		else
 			@data[parameters.column].push parameters
 
@@ -39,6 +41,10 @@ module.exports = class Board
 		windowSize = process.stdout.getWindowSize()
 		@width     = windowSize[0]
 		@height    = windowSize[1] - 7 # todo: figure out why this is hardcoded to fit the screen
+
+		if @width < 115
+			console.log 'Sorry, the width of your terminal must be atleast 115.'
+			return
 
 		@drawBuffer = ''
 
@@ -113,7 +119,10 @@ module.exports = class Board
 
 		if remainder is 0.75
 			text = ' ' + text
-		
+
+		if remainder is 0.5 and config.columns is 1
+			text = text.substring(1)
+
 		if remainder is 0.25
 			text = text.substring(1)
 		

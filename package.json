@@ -1,12 +1,12 @@
 {
 	"name": "hubble",
-	"version": "0.4.3",
+	"version": "0.4.4",
 	"description": "A generic data dashboard that displays in the terminal",
 	"bin": "./hubble",
 	"repositories": {
-    	"type": "git",
-    	"url": "http://github.com/jaymedavis/hubble"
-  	},
+		"type": "git",
+		"url": "http://github.com/jaymedavis/hubble"
+	},
 	"dependencies": {
 		"coffee-script":    "latest",
 		"colors":           "latest",

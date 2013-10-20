@@ -46,7 +46,7 @@ Specifying the column and the label with nothing else will create center-aligned
 
 	value  - the value of the data point (a specified value)
 
-If the value has been set and you want to increment it by one, you can set the value as **increment** (sample below)
+If the value has been set and you want to increment or decrement it by one, you can set the value as **increment** or **decrement**. (sample below)
 
 ### If you want to poll a value at a specified interval, use these fields (not compatible with value)
 				
@@ -92,6 +92,10 @@ After adding some data, setting some thresholds, the dashboard will now look lik
 If you have another cup of coffee, you can just increment a value that has already been set
 
 	curl --data "column=0&label=Coffee%20Drank%20Today&value=increment&high=4" http://localhost:9999/
+
+If you spill your cup of coffee, you can decrement it
+
+	curl --data "column=0&label=Coffee%20Drank%20Today&value=decrement&high=4" http://localhost:9999/
 
 A polling example - a github repository dashboard
 -------------------------------------------------
