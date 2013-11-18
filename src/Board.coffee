@@ -8,6 +8,9 @@ module.exports = class Board
 		if config.border.length > 1
 			throw new Error 'The border configuration option only supports 1 character :('
 
+		process.on 'SIGWINCH', => 
+			@draw()
+
 	set: (parameters) ->
 		unless @data?
 			@data = []
