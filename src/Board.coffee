@@ -11,6 +11,9 @@ module.exports = class Board
 		process.on 'SIGWINCH', => 
 			@draw()
 
+	silent: ->
+		@silent = true
+
 	set: (parameters) ->
 		unless @data?
 			@data = []
@@ -64,7 +67,7 @@ module.exports = class Board
 
 		@_drawBorder()
 
-		console.log @drawBuffer
+		console.log @drawBuffer unless @silent
 
 	_addToDrawBuffer: (value) ->
 		@drawBuffer += value

@@ -12,9 +12,10 @@ describe 'andromeda', ->
 	it 'should have the andromeda config loaded', ->
 		expect(config.andromeda.port).to.equal 1550
 	
-	# it 'should do something else', ->
-		# boardManager = new BoardManager
-		# board = new Board boardManager
-		
-		# server = new SocketServer board, 1550
-		# console.log server
+	it 'should do something else', ->
+		boardManager = new BoardManager
+
+		board = new Board boardManager
+		board.silent()
+
+		server = new SocketServer board, 1550
