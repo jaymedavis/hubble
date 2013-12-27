@@ -3,10 +3,10 @@ fs = require 'fs'
 
 module.exports = class DiskManager
 
-	saveConfig: (config, filename, callback) ->
-		defaultConfig = __dirname + '/configs/Default.coffee'
+	saveConfig: (config, callback) ->
+		configFile = __dirname + "/configs/#{config}.coffee"
 
-		fs.readFile defaultConfig, (err, data) ->
+		fs.readFile configFile, (err, data) ->
 			if err then return callback(err)
 
 			fs.writeFile "config.coffee", data, (err) ->

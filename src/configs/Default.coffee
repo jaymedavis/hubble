@@ -11,7 +11,6 @@ module.exports =
         port: 9999
 
     # for more information about colors, see https://github.com/Marak/colors.js
-
     colors:
         title:  'white'
         border: 'grey'

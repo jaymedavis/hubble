@@ -16,6 +16,12 @@
 		"request":          "latest",
 		"jspath":           "latest",
 		"moment":           "latest",
-		"keypress":         "latest"
+		"keypress":         "latest",
+		"websocket":        "latest",
+		"mocha":            "latest",
+		"chai":             "latest"
+	},
+	"scripts": {
+		"test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script --recursive ./tests -R spec"
 	}
 }

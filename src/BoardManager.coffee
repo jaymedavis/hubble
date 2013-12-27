@@ -1,14 +1,37 @@
-keypress      = require 'keypress'
-Board         = require './Board'
-DiskManager   = require './DiskManager'
-DefaultConfig = require './configs/Default'
+fs           = require 'fs'
+keypress     = require 'keypress'
+Board        = require './Board'
+DiskManager  = require './DiskManager'
+SocketServer = require './andromeda/SocketServer'
 
 module.exports = class BoardManager
 
 	setupDefaultBoard: ->
-		@_addBoard  'default'
+		board = @_addBoard 'default'
+
+		configPath = "#{process.cwd()}/config.coffee"
+
+		fs.exists configPath, (exists) =>
+			if exists then return
+
+			board.set { column: 0 }
+			board.set { column: 0 }
+			board.set { column: 0, label: 'Press Y to create an empty board' }
+			board.set { column: 0 }
+			board.set { column: 0, label: 'Press A to create a simple websocket server, Andromeda'  }
+			board.set { column: 0 }
+			board.set { column: 0, label: 'Press Q to quit' }
+
 		@_drawBoard 'default'
 		@_manageInput()
+
+		fs.exists configPath, (exists) =>
+			unless exists then return
+
+			config = require "#{process.cwd()}/config"
+
+			if config?.andromeda?
+				new SocketServer board, config.andromeda.port
 
 	loadFromData: (data) ->
 		data = JSON.parse data
@@ -62,11 +85,14 @@ module.exports = class BoardManager
 			
 			# todo: these could potentially clash with users screens
 			if key.name is 'q'
-				console.log ':('.white
+				console.log ':('.cyan
 				process.exit()
 
 			if key.name is 'y'
-				@_saveConfig()
+				@_saveConfig 'Default'
+
+			if key.name is 'a'
+				@_saveConfig 'Andromeda'
 			#end todo
 
 			if key.ctrl and key.name is 'c'
@@ -81,11 +107,12 @@ module.exports = class BoardManager
 		process.stdin.setRawMode true
 		process.stdin.resume()
 
-	_saveConfig: ->
+	_saveConfig: (config) ->
 		diskManager = new DiskManager
-		diskManager.saveConfig DefaultConfig, "config.coffee", (err) =>
+		diskManager.saveConfig config, (err) =>
 			if err
 				console.log err, 400
 			else
+				@boards = []
 				global.config = require "#{process.cwd()}/config"
-				@_drawBoard 'default'
+				@setupDefaultBoard()
