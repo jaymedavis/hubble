@@ -9,7 +9,9 @@ module.exports = class Server
 		boardManager = new BoardManager
 
 		app = express()
-		app.use express.bodyParser()
+
+		app.use express.json()
+		app.use express.urlencoded()
 
 		if process.argv[2]?
 			diskManager = new DiskManager
