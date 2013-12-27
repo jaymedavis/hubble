@@ -46,7 +46,7 @@ module.exports = class Board
 		@height    = windowSize[1] - 7 # todo: figure out why this is hardcoded to fit the screen
 
 		if @width < 115
-			console.log 'Sorry, the width of your terminal must be atleast 115.'
+			console.log 'Sorry, the width of your terminal must be atleast 115. There is no need to restart hubble, it will redraw when the terminal is large enough. :)'.red
 			return
 
 		@drawBuffer = ''
