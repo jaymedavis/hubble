@@ -13,7 +13,7 @@ module.exports = class SocketServer
 		httpServer.listen port, ->
 			board.set { column: 0, label: "Server Status", value: "running server at #{port}" }
 			board.set { column: 0 }
-			board.set { column: 0, label: 'Connections', value: '0' }
+			board.set { column: 0, label: 'Total Connections', value: '0' }
 			board.set { column: 0, label: 'Messages Sent', value: '0' }
 			board.draw()
 
@@ -31,8 +31,6 @@ module.exports = class SocketServer
 			board.draw()
 
 			connection.on 'message', (message) ->
-				msg = JSON.parse(message.utf8Data)
-
 				for conn in pool
 					conn.sendUTF message.utf8Data
 

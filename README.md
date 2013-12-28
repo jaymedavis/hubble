@@ -1,5 +1,5 @@
-Hubble
-======
+<img alt='hubble' src='http://i.imgur.com/hlgNUrw.png?1' border='0' />
+<br/>
 
 Hubble is a dashboard that displays in a terminal with any data you want. It allows you to setup thresholds if a number goes above/under a certain value. You can have any webhooks, programs, workers, scripts, etc just send an http post request (or setup an api endpoint to poll) and it will get placed on the dashboard. You can also just write a coffee file and have it load from disk. Be creative!!
 
@@ -21,14 +21,21 @@ Quick Start
 First Launch
 ------------
 
-Upon your first launch of Hubble, you will see a screen like below
+Upon your first launch of Hubble, you will see the screen below
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/empty-dashboard.png" />
 
-From this screen, press Y to create config.coffee in the current directory. This file contains the server and dashboard configuration. After this file is created, your board will automatically reload.
+From this screen, press Y to create an empty dashboard. You can also press A to create an Andromeda server (simple websocket server) - more below. Either option will create a config.coffee in the current directory. After this file is created, your board will automatically reload. You can edit config.coffee to customize your board. :)
+
+Empty Dashboard
+---------------
 
 <img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/new-dashboard.png" />
 
-You now edit config.coffee to customize your board. :)
+Andromeda
+---------
+
+Andromeda is a websocket server that accepts any number of connections and relays messages to all clients connected. You can configure which port to connect to from config.coffee (default 1550).
+<img src="https://raw.github.com/jaymedavis/hubble/master/screenshots/andromeda.png" />
 
 Populating your dashboard
 -------------------------

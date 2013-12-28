@@ -67,7 +67,7 @@ module.exports = class Board
 
 		@_drawBorder()
 
-		console.log @drawBuffer unless @silent
+		console.log @drawBuffer unless @silent is true
 
 	_addToDrawBuffer: (value) ->
 		@drawBuffer += value

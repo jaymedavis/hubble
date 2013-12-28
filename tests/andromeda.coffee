@@ -12,7 +12,7 @@ describe 'andromeda', ->
 	it 'should have the andromeda config loaded', ->
 		expect(config.andromeda.port).to.equal 1550
 	
-	it 'should do something else', ->
+	it 'should have a test that really tests andromeda, not just sets it up', ->
 		boardManager = new BoardManager
 
 		board = new Board boardManager
