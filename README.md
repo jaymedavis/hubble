@@ -126,12 +126,14 @@ Let's setup a few API calls that we'll use for polling. We will track some infor
 
 		columns: 2 # how many vertical columns of data for your dashboard
 
-You don't have to supply the '[github:username]:[github:password]' in the api requests, but it will allow you to poll more often (5000 requests per hour vs 60 requests per hour)
+The default [rate limit][] for the GitHub API is 60 requests an hour. Appending a
+[Personal Access Token][token] to your URLs with `?access_token=<token>` will allow you to
+poll the GitHub API up to 5000 times an hour.
 
 	curl http://localhost:9999 \
 	-d column=0 \
 	-d label="Name" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_url="https://api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].name"
@@ -139,7 +141,7 @@ You don't have to supply the '[github:username]:[github:password]' in the api re
 	curl http://localhost:9999 \
 	-d column=0 \
 	-d label="User" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_url="https://api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].login"
@@ -147,7 +149,7 @@ You don't have to supply the '[github:username]:[github:password]' in the api re
 	curl http://localhost:9999 \
 	-d column=0 \
 	-d label="Location" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_url="https://api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].location"
@@ -155,7 +157,7 @@ You don't have to supply the '[github:username]:[github:password]' in the api re
 	curl http://localhost:9999 \
 	-d column=0 \
 	-d label="Followers" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_url="https://api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].followers"
@@ -166,7 +168,7 @@ You don't have to supply the '[github:username]:[github:password]' in the api re
 	curl http://localhost:9999 \
 	-d column=0 \
 	-d label="Public Repos" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_url="https://api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].public_repos"
@@ -174,7 +176,7 @@ You don't have to supply the '[github:username]:[github:password]' in the api re
 	curl http://localhost:9999 \
 	-d column=0 \
 	-d label="Public Gists" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/users/jaymedavis" \
+	-d poll_url="https://api.github.com/users/jaymedavis" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].public_gists"
@@ -211,7 +213,7 @@ Let's build another screen to track hubble by pressing the 'h' key. The curl req
 	-d screen="h" \
 	-d column=0 \
 	-d label="Language" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].language"
@@ -224,7 +226,7 @@ Let's build another screen to track hubble by pressing the 'h' key. The curl req
 	-d screen="h" \
 	-d column=0 \
 	-d label="Watchers" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].watchers_count"
@@ -233,7 +235,7 @@ Let's build another screen to track hubble by pressing the 'h' key. The curl req
 	-d screen="h" \
 	-d column=0 \
 	-d label="Forks" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].forks_count"
@@ -252,7 +254,7 @@ Let's build another screen to track hubble by pressing the 'h' key. The curl req
 	-d column=1 \
 	-d label="Total Open Issues" \
 	-d high="1" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/hubble" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/hubble" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].open_issues_count"
@@ -272,7 +274,7 @@ Let's build another screen to track stripe.net by pressing the 's' key. The curl
 	-d screen="s" \
 	-d column=0 \
 	-d label="Language" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].language"
@@ -285,7 +287,7 @@ Let's build another screen to track stripe.net by pressing the 's' key. The curl
 	-d screen="s" \
 	-d column=0 \
 	-d label="Watchers" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].watchers_count"
@@ -294,7 +296,7 @@ Let's build another screen to track stripe.net by pressing the 's' key. The curl
 	-d screen="s" \
 	-d column=0 \
 	-d label="Forks" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].forks_count"
@@ -313,7 +315,7 @@ Let's build another screen to track stripe.net by pressing the 's' key. The curl
 	-d column=1 \
 	-d label="Total Open Issues" \
 	-d high="1" \
-	-d poll_url="https://[github:username]:[github:password]@api.github.com/repos/jaymedavis/stripe.net" \
+	-d poll_url="https://api.github.com/repos/jaymedavis/stripe.net" \
 	-d poll_seconds=10 \
 	-d poll_failed="Bummer :(" \
 	-d poll_method="json_value:^.[0].open_issues_count"
@@ -341,3 +343,6 @@ Other Stuff
 
 I really have enjoyed working on this project and would love to hear how you use it. Shoot me an email or a twitter message (@jaymed), I'd appreciate it!
 [![githalytics.com alpha](https://cruel-carlota.pagodabox.com/a4ad558698309eb2dd7f62ab575641af "githalytics.com")](http://githalytics.com/jaymedavis/hubble)
+
+[rate limit]: http://developer.github.com/v3/#rate-limiting
+[token]: https://github.com/settings/applications
