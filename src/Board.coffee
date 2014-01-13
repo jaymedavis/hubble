@@ -123,18 +123,25 @@ module.exports = class Board
 	_fixLineSpacing: (cellSpace, text) ->
 		remainder = cellSpace % 1
 
-		if remainder is 0.75
-			text = ' ' + text
+		fixedRemainder = remainder.toFixed(2)
 
-		if remainder is 0.5 and config.columns is 1
-			text = text.substring(1)
+		# two spaces for the border
+		text = text.substring(1, text.length - 1)
 
-		if remainder is 0.25
-			text = text.substring(1)
-		
-		if remainder is 0
-			text = text.substring(1)
-			text = text.substring(0, text.length - 1)
+		if config.columns is 1
+			if fixedRemainder is '0.50' then text = ' ' + text
+
+		if config.columns is 2
+			if fixedRemainder is '0.25' then text = ' ' + text
+			if fixedRemainder is '0.50' then text = ' ' + text + ' '
+			if fixedRemainder is '0.75' then text = '  ' + text + ' '
+
+		if config.columns is 3
+			if fixedRemainder is '0.17' then text = ' ' + text
+			if fixedRemainder is '0.33' then text = ' ' + text + ' '
+			if fixedRemainder is '0.50' then text = '  ' + text + ' '
+			if fixedRemainder is '0.67' then text = '  ' + text + '  '
+			if fixedRemainder is '0.83' then text = '   ' + text + '  '
 
 		return text
 

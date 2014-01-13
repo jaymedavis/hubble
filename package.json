@@ -1,6 +1,6 @@
 {
 	"name": "hubble",
-	"version": "0.5.0",
+	"version": "0.5.1",
 	"description": "A generic data dashboard that displays in the terminal",
 	"bin": "./hubble",
 	"repositories": {
