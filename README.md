@@ -1,6 +1,8 @@
 <img alt='hubble' src='http://i.imgur.com/nMjvJoT.png?1' border='0' />
 <br/>
 <a href='https://pledgie.com/campaigns/23502'><img alt='Click here to lend your support to: hubble and make a donation at pledgie.com !' src='https://pledgie.com/campaigns/23502.png?skin_name=chrome' border='0' ></a>
+<br/>
+Or how about some DOGEcoin? Much thanks! DQEuYmg54rRLff3H91nrtQMX74ikbSSKyw
 
 Hubble is a dashboard that displays in a terminal with any data you want. It allows you to setup thresholds if a number goes above/under a certain value. You can have any webhooks, programs, workers, scripts, etc just send an http post request (or setup an api endpoint to poll) and it will get placed on the dashboard. You can also just write a coffee file and have it load from disk. Be creative!!
 
