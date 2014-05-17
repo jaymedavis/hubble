@@ -1,6 +1,6 @@
 {
 	"name": "hubble",
-	"version": "0.5.1",
+	"version": "0.5.2",
 	"description": "A generic data dashboard that displays in the terminal",
 	"bin": "./hubble",
 	"repositories": {
@@ -19,7 +19,8 @@
 		"keypress":         "latest",
 		"websocket":        "latest",
 		"mocha":            "latest",
-		"chai":             "latest"
+		"chai":             "latest",
+		"body-parser":      "latest"
 	},
 	"scripts": {
 		"test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script --recursive ./tests -R spec"

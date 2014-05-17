@@ -1,5 +1,6 @@
 express      = require 'express'
 fs           = require 'fs'
+bodyParser   = require 'body-parser'
 BoardManager = require './BoardManager'
 DiskManager  = require './DiskManager'
 
@@ -10,8 +11,7 @@ module.exports = class Server
 
 		app = express()
 
-		app.use express.json()
-		app.use express.urlencoded()
+		app.use bodyParser()
 
 		if process.argv[2]?
 			diskManager = new DiskManager
