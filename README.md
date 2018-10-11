@@ -8,15 +8,15 @@ Quick Start
 
 1) Install hubble
 	
-	npm install -g hubble
+       npm install -g hubble
 
 2) Make sure your path has shared npm libraries. If you aren't sure, just run
 
-	export PATH=/usr/local/share/npm/bin:$PATH
+       export PATH=/usr/local/share/npm/bin:$PATH
 
 2) Start your dashboard by typing
 	
-	hubble
+       hubble
 
 First Launch
 ------------
