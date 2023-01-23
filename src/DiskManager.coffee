@@ -1,4 +1,4 @@
-cs = require 'coffee-script'
+cs = require 'coffeescript'
 fs = require 'fs'
 
 module.exports = class DiskManager
@@ -77,7 +77,7 @@ module.exports = class DiskManager
 							coffee += "\n\t\t\t\"poll_header\":  \"#{entry.poll_header}\""
 						else
 							for header in entry.poll_header
-						 		coffee += "\n\t\t\t\"poll_header\":  \"#{header}\""
+								coffee += "\n\t\t\t\"poll_header\":  \"#{header}\""
 
 					coffee += "\n\t\t\t\"screen\":       \"#{entry.screen}\""      if entry.screen?
 					coffee += "\n\t\t}"

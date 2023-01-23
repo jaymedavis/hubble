@@ -1,6 +1,6 @@
 {
 	"name": "hubble",
-	"version": "0.5.4",
+	"version": "0.5.5",
 	"description": "A generic data dashboard that displays in the terminal",
 	"bin": "./hubble",
 	"repository": {
@@ -8,23 +8,24 @@
 		"url": "http://github.com/jaymedavis/hubble"
 	},
 	"dependencies": {
-		"coffee-script": "latest",
-		"colors": "latest",
-		"pad": "latest",
-		"express": "latest",
-		"underscore": "latest",
-		"request": "latest",
-		"jspath": "latest",
-		"moment": "latest",
-		"keypress": "latest",
-		"websocket": "latest",
+		"body-parser": "latest",
 		"chai": "latest",
-		"body-parser": "latest"
+		"coffeescript": "latest",
+		"colors": "latest",
+		"express": "latest",
+		"jspath": "latest",
+		"keypress": "latest",
+		"moment": "latest",
+		"pad": "latest",
+		"request": "latest",
+		"underscore": "latest",
+		"websocket": "latest"
 	},
 	"scripts": {
+		"dev": "./node_modules/coffeescript/bin/coffee ./src/index.coffee",
 		"test": "./node_modules/mocha/bin/mocha --compilers coffee:coffee-script/register --recursive ./tests -R spec"
 	},
 	"devDependencies": {
-		"mocha": "^5.2.0"
+		"mocha": "latest"
 	}
 }
