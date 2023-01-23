@@ -18,6 +18,25 @@ Quick Start
 	
        hubble
 
+Quick Start - From Source
+-------------------------
+
+1) clone this repo, then
+	
+       npm install
+
+2) run it from source
+
+       npm run dev
+
+3) test it
+
+       npm run test
+
+4) and release it (for me).  bump the version in package.json and
+
+       npm publish
+
 First Launch
 ------------
 
@@ -336,8 +355,3 @@ If you wish to load your file next time you start hubble, just provide it as a p
 	./hubble myboard.coffee
 
 You could just as easily write your script directly if you choose... without doing any http posts.
-
-Other Stuff
------------
-
-I really have enjoyed working on this project and would love to hear how you use it. Shoot me an email or a twitter message (@jaymed), I'd appreciate it!
