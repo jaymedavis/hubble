@@ -1,6 +1,6 @@
 {
 	"name": "hubble",
-	"version": "0.5.7",
+	"version": "0.5.8",
 	"description": "A generic data dashboard that displays in the terminal",
 	"bin": "./hubble",
 	"repository": {
@@ -11,7 +11,7 @@
 		"body-parser": "latest",
 		"chai": "latest",
 		"coffeescript": "latest",
-		"colors": "latest",
+		"colors": "1.4.0",
 		"express": "latest",
 		"jspath": "latest",
 		"keypress": "latest",
